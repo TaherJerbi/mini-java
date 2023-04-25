@@ -54,7 +54,7 @@ class JavaCompilerGUI(QMainWindow):
 
         # Execute the command `mini_java example.java`
         # and get the output
-        output = subprocess.run(["./mini_java", file_name], capture_output=True)
+        output = subprocess.run(["./java_compiler/mini_java", file_name], capture_output=True)
         print(code)
         # Set the output and stderr in the output textarea
         if output.stderr:
