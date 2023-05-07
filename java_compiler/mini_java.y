@@ -1,134 +1,222 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+    // #include "semantic.c"
 
-int yyerror(char const *msg);	
-int yylex(void);
-extern int yylineno;
+    extern int yylineno;
+
+    int yyerror(char const * msg);	
+    int yylex();
+
+    
+
 %}
-%token BOOLEAN
-%token KEY_WORD
-%token REAL
+%error-verbose
 %token ID
-%token INTEGER_LITERAL
+%token INVALID_ID
+
+%token OP_MULTIPLY
+%token OP_DIVIDE
+%token OP_ADD
+%token OP_SUBTRACT
+%token OP_MODULO
 %token OP_REL
-%token OP_ARITH
+
 %token AFF
+%token CURLY_OPEN
+%token CURLY_CLOSE
+%token PAREN_OPEN
+%token PAREN_CLOSE
 %token SEMICOLON
-%token OPEN_PAR
-%token CLOSE_PAR
-%token OPEN_BRACKET
-%token CLOSE_BRACKET
-%token OPEN_SQUARE_BRACKET
-%token CLOSE_SQUARE_BRACKET
-%token DOT
-%token DOUBLE_QUOTE
-%token CLASS
 %token COMMA
-%token PRIMITIVE_TYPE
-%token VOID
-%token IF
-%token ELSE
-%token WHILE
-%token RETURN
-%token EXTENDS
-%token IMPLEMENTS
-%%
+%token DOT
+%token COLON
+%token BRACKET_OPEN
+%token BRACKET_CLOSE
 
-program : class_declaration
-        ;
+%token INT_LITERAL
+%token FLOAT_LITERAL
+%token BOOLEAN_LITERAL
+%token CHAR_LITERAL
+%token STRING_LITERAL
 
-class_declaration : class_signature OPEN_BRACKET class_body CLOSE_BRACKET
-                    | error OPEN_BRACKET class_body CLOSE_BRACKET {yyerror("Error in class declaration");}
-                    | class_signature OPEN_BRACKET error CLOSE_BRACKET {yyerror("Error in class body");}
-                    | class_signature OPEN_BRACKET class_body error {yyerror("Missing closing }");}
-                    ;
+%token INT_TYPE
+%token FLOAT_TYPE
+%token BOOLEAN_TYPE
+%token CHAR_TYPE
+%token STRING_TYPE
+%token VOID_TYPE
 
-class_signature: CLASS ID
-                | CLASS ID EXTENDS ID
-                | CLASS ID IMPLEMENTS ID
-                | CLASS ID EXTENDS ID IMPLEMENTS ID
-                | error ID {yyerror("Error in class signature");}
-                | CLASS error {yyerror("Error in class signature");}
-                | CLASS ID EXTENDS error {yyerror("Error in class signature");}
-                | CLASS ID IMPLEMENTS error {yyerror("Error in class signature");}
-                | CLASS ID EXTENDS ID IMPLEMENTS error {yyerror("Error in class signature");}
-                
-                ;
-class_body : field_declarations
-              | method_declarations
-              | field_declarations method_declarations
-            ;
-
-method_declarations: method_declaration
-                    | method_declarations method_declaration
-                    ;
-method_declaration: VOID ID OPEN_PAR CLOSE_PAR OPEN_BRACKET method_body CLOSE_BRACKET
-                  ;
-
-method_body : field_declarations
-            | statements
-            | field_declarations statements
-            ;
-
-statements : statement
-            | statements statement
-            ;
-
-statement : expression SEMICOLON
-          | variable AFF expression SEMICOLON
-          | field_declaration
-          | IF OPEN_PAR expression CLOSE_PAR OPEN_BRACKET statements CLOSE_BRACKET
-          | IF OPEN_PAR expression CLOSE_PAR OPEN_BRACKET statements CLOSE_BRACKET ELSE OPEN_BRACKET statements CLOSE_BRACKET
-          | WHILE OPEN_PAR expression CLOSE_PAR OPEN_BRACKET statements CLOSE_BRACKET
-          | RETURN expression SEMICOLON
-          ;
-
-field_declarations : field_declaration
-                   | field_declarations field_declaration
-                   ;
-
-field_declaration : type variable SEMICOLON
-                   | type variable AFF expression SEMICOLON
-                   ;
-
-type : PRIMITIVE_TYPE
-     ;
-
-variable : ID
-          | ID OPEN_SQUARE_BRACKET expression CLOSE_SQUARE_BRACKET
-         ;
-
-expression : expression OP_REL expression %prec OP_REL
-           | expression OP_ARITH expression %prec OP_ARITH
-           | OPEN_PAR expression CLOSE_PAR
-           | INTEGER_LITERAL
-           | REAL
-           | BOOLEAN
-           | variable
-           | method_call
-           ;
-
-method_call : variable DOT ID OPEN_PAR arguments CLOSE_PAR
-            | ID OPEN_PAR arguments CLOSE_PAR
-            ;
-
-arguments : expression
-          | arguments COMMA  expression
-          ;
+%token THIS_KEYWORD
+%token PUBLIC_KEYWORD
+%token PRIVATE_KEYWORD
+%token PROTECTED_KEYWORD
+%token STATIC_KEYWORD
+%token FINAL_KEYWORD
+%token ABSTRACT_KEYWORD
+%token CLASS_KEYWORD
+%token IF_KEYWORD
+%token ELSE_KEYWORD
+%token WHILE_KEYWORD
+%token FOR_KEYWORD
+%token RETURN_KEYWORD
+%token EXTENDS_KEYWORD
+%token IMPLEMENTS_KEYWORD
 
 %%
+programme: class_list
+    ;
 
-int yyerror(char const *msg) {
-       
-	
-	fprintf(stderr, "%s %d\n", msg,yylineno);
-	return 0;
-	
-	
-}
+class_list: class_list class
+    | class
+    ;
+
+class: CLASS_KEYWORD ID CURLY_OPEN CURLY_CLOSE 
+    | CLASS_KEYWORD ID CURLY_OPEN class_body CURLY_CLOSE
+    | error ID CURLY_OPEN class_body CURLY_CLOSE { yyerror("missing class keyword"); }
+    | CLASS_KEYWORD error CURLY_OPEN class_body CURLY_CLOSE { yyerror("missing class name"); }
+    | CLASS_KEYWORD ID error class_body CURLY_CLOSE { yyerror("missing curly open"); }
+    | CLASS_KEYWORD ID CURLY_OPEN class_body error { yyerror("missing curly close"); }
+    | CLASS_KEYWORD ID EXTENDS_KEYWORD ID CURLY_OPEN class_body CURLY_CLOSE
+    | CLASS_KEYWORD ID IMPLEMENTS_KEYWORD id_list CURLY_OPEN class_body CURLY_CLOSE
+    | CLASS_KEYWORD ID EXTENDS_KEYWORD ID IMPLEMENTS_KEYWORD id_list CURLY_OPEN class_body CURLY_CLOSE
+    ;
+
+class_body: class_body class_member
+    | class_member
+    ;
+
+class_member: field_declaration
+    | method_declaration
+    ;
+
+field_declaration: access_modifier type id_list SEMICOLON
+      | access_modifier STATIC_KEYWORD type id_list SEMICOLON
+      | access_modifier type ID AFF expression SEMICOLON
+      | access_modifier STATIC_KEYWORD type ID AFF expression SEMICOLON
+    ;
+
+id_list: ID
+    | id_list COMMA ID
+    ;
+
+access_modifier: PUBLIC_KEYWORD
+    | PRIVATE_KEYWORD
+    | PROTECTED_KEYWORD
+    | 
+    ;
+
+type: INT_TYPE
+    | FLOAT_TYPE
+    | BOOLEAN_TYPE
+    | CHAR_TYPE
+    | STRING_TYPE
+    | VOID_TYPE
+    | ID
+    ;
+
+method_declaration: method_signature CURLY_OPEN method_body CURLY_CLOSE
+    ;
+
+method_signature: access_modifier type ID PAREN_OPEN parameter_list PAREN_CLOSE
+              | access_modifier STATIC_KEYWORD type ID PAREN_OPEN parameter_list PAREN_CLOSE
+              | access_modifier type ID PAREN_OPEN PAREN_CLOSE
+              | access_modifier STATIC_KEYWORD type ID PAREN_OPEN PAREN_CLOSE
+              ;
+
+parameter_list: parameter
+    | parameter_list COMMA parameter
+    ;
+parameter: type ID
+    ;
+
+method_body: statement_list
+    ;
+
+statement_list: statement_list statement
+    | statement
+    ;
+
+statement: block
+    | if_statement
+    | while_statement
+    | for_statement
+    | return_statement
+    | expression_statement
+    | local_variable_declaration
+    | assignment_statement
+    ;
+
+assignment_statement: ID AFF expression SEMICOLON
+    ;
+
+block: CURLY_OPEN statement_list CURLY_CLOSE
+    ;
+
+if_statement: IF_KEYWORD PAREN_OPEN expression PAREN_CLOSE statement
+    | IF_KEYWORD PAREN_OPEN expression PAREN_CLOSE statement ELSE_KEYWORD statement
+    ;
+
+while_statement: WHILE_KEYWORD PAREN_OPEN expression PAREN_CLOSE statement
+    ;
+
+for_statement: FOR_KEYWORD PAREN_OPEN for_init_statement SEMICOLON expression SEMICOLON for_update_statement PAREN_CLOSE statement
+    ;
+
+for_init_statement: local_variable_declaration
+    | expression_statement
+    ;
+
+for_update_statement: expression_statement
+    ;
+
+return_statement: RETURN_KEYWORD SEMICOLON
+    | RETURN_KEYWORD expression SEMICOLON
+    ;
+
+expression:  expression OP_ADD expression
+    | expression OP_SUBTRACT expression
+    | expression OP_MULTIPLY expression
+    | expression OP_DIVIDE expression
+    | expression OP_MODULO expression
+    | expression OP_REL expression
+    | ID DOT expression
+    | expression DOT ID PAREN_OPEN PAREN_CLOSE
+    | expression PAREN_OPEN argument_list PAREN_CLOSE
+    | expression PAREN_OPEN PAREN_CLOSE
+    | PAREN_OPEN expression PAREN_CLOSE 
+    | INT_LITERAL
+    | FLOAT_LITERAL
+    | BOOLEAN_LITERAL
+    | CHAR_LITERAL
+    | STRING_LITERAL
+    | THIS_KEYWORD
+    | ID
+    | error { yyerror("expression error"); }
+    ;
+
+argument_list: expression
+    | argument_list COMMA expression
+    ;
+
+expression_statement: SEMICOLON
+    | expression SEMICOLON
+    ;
+
+local_variable_declaration: type ID SEMICOLON
+    | type ID AFF expression SEMICOLON
+    ;
+
+%%
 
 extern FILE *yyin;
+
+int yyerror(char const *msg) {
+	printf("---\n%s \nline: %d\n---\n", msg,yylineno);
+	return 0;	
+}
+
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
@@ -142,6 +230,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   yyin = fp;
+
   yyparse();
 
   fclose(fp);

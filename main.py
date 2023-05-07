@@ -6,6 +6,9 @@ class JavaCompilerGUI(QMainWindow):
         super().__init__()
         self.setWindowTitle("Mini Java Compiler")
 
+        # Set the main window size
+        self.resize(900, 600)
+
         # Create the text areas
         self.input_textarea = QPlainTextEdit()
         self.output_textarea = QTextEdit()
@@ -56,11 +59,12 @@ class JavaCompilerGUI(QMainWindow):
         # and get the output
         output = subprocess.run(["./java_compiler/mini_java", file_name], capture_output=True)
         print(code)
+        print(output)
         # Set the output and stderr in the output textarea
         if output.stderr:
             self.output_textarea.setPlainText(output.stderr.decode())
         else:
-            self.output_textarea.setPlainText("Compilation Successful!")
+            self.output_textarea.setPlainText("Compilation Successful!\n" + output.stdout.decode())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

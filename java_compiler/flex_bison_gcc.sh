@@ -7,6 +7,11 @@ fi
 
 name=$1
 
-bison -d "${name}.y"
+echo "Bisoning..."
+bison -v -d "${name}.y"
+echo "Bison done"
+echo "Flexing..."
 flex -o "${name}.yy.c" "${name}.lex"
+echo "Flex done"
+echo "Compiling..."
 gcc -o "${name}" "${name}.tab.c" "${name}.yy.c"
