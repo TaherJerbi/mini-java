@@ -9,57 +9,33 @@ static char *symbol_functions[] = { "DECLARATION", "PARAMETER", "INSTANTIATION",
 extern int line;
 
 typedef struct node {
-    char* name;                                             // variable name
-    char* function;                                         // rule function
-    char* kind;                                             // variable global type
-    char* type;                                             // variable type or method return type
-    int initialized;                                        // if variable is initialized
-    int level;                                              // variable level
-    char* params_types[PARAM_NUMBER] ;                      // agrs type if function
-    char* params_names[PARAM_NUMBER] ;                      // params if function
-    int params_init[PARAM_NUMBER] ;                         // agrs init if function
-    int param_index ;                                       //  current index
-    int class_id;                                           // class id
-    int line;
-
+				char* name;                                             // variable name
+				char* type;                                             // variable type or method return type
+				int initialized;                                        // if variable is initialized
+				int used;					       // if variable is used
+				int level;                                              // variable level
+				char* param_types[PARAM_NUMBER];                      // agrs type if function
+				char* param_names[PARAM_NUMBER];                      // params if function
+				int num_params;                                       // number of params if function
+				int params_init[PARAM_NUMBER] ;                         // agrs init if function
+				int class_id;                                           // class id
+				int method_id;
+				int line;
+				int category; // 1 = variable, 2 = method, 3 = class
 } NODE;
 
 #define SYMBOL_TABLE_LENGTH 300
 
 NODE symbol_table[SYMBOL_TABLE_LENGTH];
 
-// check main
+void warnings();
+int check_declaration(char* name, int level, int class_id, int method_id);
+int check_method(char* name, int param_count, int level, int class_id);
+int check_definition(char* name, int level, int class_id, int method_id);
+int print_symtable();
+int insert_var(char* name, char* type, int initialized, int level, int class_id, int method_id);
 
-void check_main(void);
+int insert_method(char* name, char* type, char* param_types[], char* param_names[], int num_params, int level, int class_id);
 
-// node table modifications
-
-int  insert_symbol(char *name,char* function,char* kind, char* type,int level,int class_id);
-
-int  remove_param(int index);
-
-// selectors
-
-int   get_next_empty_element(void);
-
-int   get_last_element_index(void);
-
-// check
-
-int   lookup_variable(char* name,char* type,int level, int class_id);
-
-int  lookup_class(char* name,int class_id);
-
-int  lookup_method(char* name,char* return_type,int class_id);
-
-int  lookup_declarations(char *name,char* function, char* kind,int level, int class_id);
-
-void            insert_call_param(int index,char* val,char* type);
-void            set_param(char* name, char* type);
-
-// visualization
-
-void print_symtab(void);
-
-
+int insert_class(char* name);
 #endif

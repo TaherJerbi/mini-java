@@ -9,7 +9,7 @@
 %}
 
 %{
-int line_nb = 1;
+int line = 1;
 %}
 
 %x comment 
@@ -83,69 +83,69 @@ START_COMMENT "/\*"
 
 %%
 {WS}+                   /* ignore whitespace */
-[\n\r]                  { ++line_nb ;}
+[\n\r]                  { ++line ;}
 {START_COMMENT}         { BEGIN(comment); }
 <comment>[^*\n]*        /* consume anything that isn't a comment end */
 <comment>"*"+[^*/\n]*   /* consume *'s not followed by / or newline */
-<comment>\n             { ++line_nb; }
+<comment>\n             { ++line; }
 <comment>"*"+"/"        { BEGIN(INITIAL); }
 
 
-{INT_TYPE}              return INT_TYPE;
-{FLOAT_TYPE}            return FLOAT_TYPE;
-{CHAR_TYPE}             return CHAR_TYPE;
-{STRING_TYPE}           return STRING_TYPE;
-{BOOLEAN_TYPE}          return BOOLEAN_TYPE;
-{VOID_TYPE}             return VOID_TYPE;
+{INT_TYPE}               { yylval = strdup(yytext); return INT_TYPE; }
+{FLOAT_TYPE}             { yylval = strdup(yytext); return FLOAT_TYPE; }
+{CHAR_TYPE}              { yylval = strdup(yytext); return CHAR_TYPE; }
+{STRING_TYPE}            { yylval = strdup(yytext); return STRING_TYPE; }
+{BOOLEAN_TYPE}           { yylval = strdup(yytext); return BOOLEAN_TYPE; }
+{VOID_TYPE}              { yylval = strdup(yytext); return VOID_TYPE; }
 
-{THIS_KEYWORD}          return THIS_KEYWORD;
-{PUBLIC_KEYWORD}        return PUBLIC_KEYWORD;
-{PRIVATE_KEYWORD}       return PRIVATE_KEYWORD;
-{PROTECTED_KEYWORD}     return PROTECTED_KEYWORD;
-{STATIC_KEYWORD}        return STATIC_KEYWORD;
-{FINAL_KEYWORD}         return FINAL_KEYWORD;
-{ABSTRACT_KEYWORD}      return ABSTRACT_KEYWORD;
-{CLASS_KEYWORD}         return CLASS_KEYWORD;
-{IF_KEYWORD}            return IF_KEYWORD;
-{ELSE_KEYWORD}          return ELSE_KEYWORD;
-{WHILE_KEYWORD}         return WHILE_KEYWORD;
-{FOR_KEYWORD}           return FOR_KEYWORD;
-{RETURN_KEYWORD}        return RETURN_KEYWORD;
-{EXTENDS_KEYWORD}       return EXTENDS_KEYWORD;
-{IMPLEMENTS_KEYWORD}    return IMPLEMENTS_KEYWORD;
-
-
-{OP_MULTIPLY}           return OP_MULTIPLY;
-{OP_DIVIDE}             return OP_DIVIDE;
-{OP_ADD}                return OP_ADD;
-{OP_SUBTRACT}           return OP_SUBTRACT;
-{OP_MODULO}             return OP_MODULO;
-
-{OP_REL}                return OP_REL;
+{THIS_KEYWORD}           { yylval = strdup(yytext); return THIS_KEYWORD; }
+{PUBLIC_KEYWORD}         { yylval = strdup(yytext); return PUBLIC_KEYWORD; }
+{PRIVATE_KEYWORD}        { yylval = strdup(yytext); return PRIVATE_KEYWORD; }
+{PROTECTED_KEYWORD}      { yylval = strdup(yytext); return PROTECTED_KEYWORD; }
+{STATIC_KEYWORD}         { yylval = strdup(yytext); return STATIC_KEYWORD; }
+{FINAL_KEYWORD}          { yylval = strdup(yytext); return FINAL_KEYWORD; }
+{ABSTRACT_KEYWORD}       { yylval = strdup(yytext); return ABSTRACT_KEYWORD; }
+{CLASS_KEYWORD}          { yylval = strdup(yytext); return CLASS_KEYWORD; }
+{IF_KEYWORD}             { yylval = strdup(yytext); return IF_KEYWORD; }
+{ELSE_KEYWORD}           { yylval = strdup(yytext); return ELSE_KEYWORD; }
+{WHILE_KEYWORD}          { yylval = strdup(yytext); return WHILE_KEYWORD; }
+{FOR_KEYWORD}            { yylval = strdup(yytext); return FOR_KEYWORD; }
+{RETURN_KEYWORD}         { yylval = strdup(yytext); return RETURN_KEYWORD; }
+{EXTENDS_KEYWORD}        { yylval = strdup(yytext); return EXTENDS_KEYWORD; }
+{IMPLEMENTS_KEYWORD}     { yylval = strdup(yytext); return IMPLEMENTS_KEYWORD; }
 
 
-{AFF}                   return AFF;
-{CURLY_OPEN}            return CURLY_OPEN;
-{CURLY_CLOSE}           return CURLY_CLOSE;
-{PAREN_OPEN}            return PAREN_OPEN;
-{PAREN_CLOSE}           return PAREN_CLOSE;
-{SEMICOLON}             return SEMICOLON;
-{COMMA}                 return COMMA;
-{DOT}                   return DOT;
-{COLON}                 return COLON;
-{BRACKET_OPEN}          return BRACKET_OPEN;
-{BRACKET_CLOSE}         return BRACKET_CLOSE;
+{OP_MULTIPLY}            { yylval = strdup(yytext); return OP_MULTIPLY; }
+{OP_DIVIDE}              { yylval = strdup(yytext); return OP_DIVIDE; }
+{OP_ADD}                 { yylval = strdup(yytext); return OP_ADD; }
+{OP_SUBTRACT}            { yylval = strdup(yytext); return OP_SUBTRACT; }
+{OP_MODULO}              { yylval = strdup(yytext); return OP_MODULO; }
+
+{OP_REL}                 { yylval = strdup(yytext); return OP_REL; }
 
 
-{BOOLEAN_LITERAL}       return BOOLEAN_LITERAL;
-{INT_LITERAL}           return INT_LITERAL;
-{FLOAT_LITERAL}         return FLOAT_LITERAL;
-{CHAR_LITERAL}          return CHAR_LITERAL;
-{STRING_LITERAL}        return STRING_LITERAL;
+{AFF}                    { yylval = strdup(yytext); return AFF; }
+{CURLY_OPEN}             { yylval = strdup(yytext); return CURLY_OPEN; }
+{CURLY_CLOSE}            { yylval = strdup(yytext); return CURLY_CLOSE; }
+{PAREN_OPEN}             { yylval = strdup(yytext); return PAREN_OPEN; }
+{PAREN_CLOSE}            { yylval = strdup(yytext); return PAREN_CLOSE; }
+{SEMICOLON}              { yylval = strdup(yytext); return SEMICOLON; }
+{COMMA}                  { yylval = strdup(yytext); return COMMA; }
+{DOT}                    { yylval = strdup(yytext); return DOT; }
+{COLON}                  { yylval = strdup(yytext); return COLON; }
+{BRACKET_OPEN}           { yylval = strdup(yytext); return BRACKET_OPEN; }
+{BRACKET_CLOSE}          { yylval = strdup(yytext); return BRACKET_CLOSE; }
 
-{ID}                    return ID;
-{INVALID_ID}            {printf("illegal_identifier \'%s\' on line :%d\n",yytext,yylineno);}
-{SINGLE_QUOTE}({CHARACTER}|{DIGIT}|{LETTER})*{SINGLE_QUOTE} {printf("---\nCan't use single quote from string literal\n %s on line :%d\n---\n",yytext,yylineno);}
-.                       {printf("illegal_character \'%s\' on line :%d\n",yytext,yylineno);}
+
+{BOOLEAN_LITERAL}        { yylval = strdup(yytext); return BOOLEAN_LITERAL; }
+{INT_LITERAL}            { yylval = strdup(yytext); return INT_LITERAL; }
+{FLOAT_LITERAL}          { yylval = strdup(yytext); return FLOAT_LITERAL; }
+{CHAR_LITERAL}           { yylval = strdup(yytext); return CHAR_LITERAL; }
+{STRING_LITERAL}         { yylval = strdup(yytext); return STRING_LITERAL; }
+
+{ID}                     { yylval = strdup(yytext); return ID; }
+{INVALID_ID}            { printf("illegal_identifier \'%s\' on line :%d\n",yytext,yylineno);}
+{SINGLE_QUOTE}({CHARACTER}|{DIGIT}|{LETTER})*{SINGLE_QUOTE} { printf("---\nCan't use single quote from string literal\n %s on line :%d\n---\n",yytext,yylineno);}
+.                       { printf("illegal_character \'%s\' on line :%d\n",yytext,yylineno);}
 
 %%

@@ -634,7 +634,7 @@ char *yytext;
  #include <math.h>	 			
 #line 635 "mini_java.yy.c"
 #line 12 "mini_java.lex"
-int line_nb = 1;
+int line = 1;
 #line 638 "mini_java.yy.c"
  
 #line 640 "mini_java.yy.c"
@@ -933,7 +933,7 @@ case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
 #line 86 "mini_java.lex"
-{ ++line_nb ;}
+{ ++line ;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -954,7 +954,7 @@ case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
 #line 90 "mini_java.lex"
-{ ++line_nb; }
+{ ++line; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -964,237 +964,237 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 94 "mini_java.lex"
-return INT_TYPE;
+{ yylval = strdup(yytext); return INT_TYPE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 95 "mini_java.lex"
-return FLOAT_TYPE;
+{ yylval = strdup(yytext); return FLOAT_TYPE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 96 "mini_java.lex"
-return CHAR_TYPE;
+{ yylval = strdup(yytext); return CHAR_TYPE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 97 "mini_java.lex"
-return STRING_TYPE;
+{ yylval = strdup(yytext); return STRING_TYPE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 98 "mini_java.lex"
-return BOOLEAN_TYPE;
+{ yylval = strdup(yytext); return BOOLEAN_TYPE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 99 "mini_java.lex"
-return VOID_TYPE;
+{ yylval = strdup(yytext); return VOID_TYPE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 101 "mini_java.lex"
-return THIS_KEYWORD;
+{ yylval = strdup(yytext); return THIS_KEYWORD; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 102 "mini_java.lex"
-return PUBLIC_KEYWORD;
+{ yylval = strdup(yytext); return PUBLIC_KEYWORD; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 103 "mini_java.lex"
-return PRIVATE_KEYWORD;
+{ yylval = strdup(yytext); return PRIVATE_KEYWORD; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 104 "mini_java.lex"
-return PROTECTED_KEYWORD;
+{ yylval = strdup(yytext); return PROTECTED_KEYWORD; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 105 "mini_java.lex"
-return STATIC_KEYWORD;
+{ yylval = strdup(yytext); return STATIC_KEYWORD; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 106 "mini_java.lex"
-return FINAL_KEYWORD;
+{ yylval = strdup(yytext); return FINAL_KEYWORD; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 107 "mini_java.lex"
-return ABSTRACT_KEYWORD;
+{ yylval = strdup(yytext); return ABSTRACT_KEYWORD; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 108 "mini_java.lex"
-return CLASS_KEYWORD;
+{ yylval = strdup(yytext); return CLASS_KEYWORD; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 109 "mini_java.lex"
-return IF_KEYWORD;
+{ yylval = strdup(yytext); return IF_KEYWORD; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 110 "mini_java.lex"
-return ELSE_KEYWORD;
+{ yylval = strdup(yytext); return ELSE_KEYWORD; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 111 "mini_java.lex"
-return WHILE_KEYWORD;
+{ yylval = strdup(yytext); return WHILE_KEYWORD; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 112 "mini_java.lex"
-return FOR_KEYWORD;
+{ yylval = strdup(yytext); return FOR_KEYWORD; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 113 "mini_java.lex"
-return RETURN_KEYWORD;
+{ yylval = strdup(yytext); return RETURN_KEYWORD; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 114 "mini_java.lex"
-return EXTENDS_KEYWORD;
+{ yylval = strdup(yytext); return EXTENDS_KEYWORD; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 115 "mini_java.lex"
-return IMPLEMENTS_KEYWORD;
+{ yylval = strdup(yytext); return IMPLEMENTS_KEYWORD; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 118 "mini_java.lex"
-return OP_MULTIPLY;
+{ yylval = strdup(yytext); return OP_MULTIPLY; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 119 "mini_java.lex"
-return OP_DIVIDE;
+{ yylval = strdup(yytext); return OP_DIVIDE; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 120 "mini_java.lex"
-return OP_ADD;
+{ yylval = strdup(yytext); return OP_ADD; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 121 "mini_java.lex"
-return OP_SUBTRACT;
+{ yylval = strdup(yytext); return OP_SUBTRACT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 122 "mini_java.lex"
-return OP_MODULO;
+{ yylval = strdup(yytext); return OP_MODULO; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 124 "mini_java.lex"
-return OP_REL;
+{ yylval = strdup(yytext); return OP_REL; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 127 "mini_java.lex"
-return AFF;
+{ yylval = strdup(yytext); return AFF; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 128 "mini_java.lex"
-return CURLY_OPEN;
+{ yylval = strdup(yytext); return CURLY_OPEN; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 129 "mini_java.lex"
-return CURLY_CLOSE;
+{ yylval = strdup(yytext); return CURLY_CLOSE; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 130 "mini_java.lex"
-return PAREN_OPEN;
+{ yylval = strdup(yytext); return PAREN_OPEN; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 131 "mini_java.lex"
-return PAREN_CLOSE;
+{ yylval = strdup(yytext); return PAREN_CLOSE; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 132 "mini_java.lex"
-return SEMICOLON;
+{ yylval = strdup(yytext); return SEMICOLON; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 133 "mini_java.lex"
-return COMMA;
+{ yylval = strdup(yytext); return COMMA; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 134 "mini_java.lex"
-return DOT;
+{ yylval = strdup(yytext); return DOT; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 135 "mini_java.lex"
-return COLON;
+{ yylval = strdup(yytext); return COLON; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 136 "mini_java.lex"
-return BRACKET_OPEN;
+{ yylval = strdup(yytext); return BRACKET_OPEN; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 137 "mini_java.lex"
-return BRACKET_CLOSE;
+{ yylval = strdup(yytext); return BRACKET_CLOSE; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 140 "mini_java.lex"
-return BOOLEAN_LITERAL;
+{ yylval = strdup(yytext); return BOOLEAN_LITERAL; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 141 "mini_java.lex"
-return INT_LITERAL;
+{ yylval = strdup(yytext); return INT_LITERAL; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 142 "mini_java.lex"
-return FLOAT_LITERAL;
+{ yylval = strdup(yytext); return FLOAT_LITERAL; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
 #line 143 "mini_java.lex"
-return CHAR_LITERAL;
+{ yylval = strdup(yytext); return CHAR_LITERAL; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 144 "mini_java.lex"
-return STRING_LITERAL;
+{ yylval = strdup(yytext); return STRING_LITERAL; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 #line 146 "mini_java.lex"
-return ID;
+{ yylval = strdup(yytext); return ID; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 #line 147 "mini_java.lex"
-{printf("illegal_identifier \'%s\' on line :%d\n",yytext,yylineno);}
+{ printf("illegal_identifier \'%s\' on line :%d\n",yytext,yylineno);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
 #line 148 "mini_java.lex"
-{printf("---\nCan't use single quote from string literal\n %s on line :%d\n---\n",yytext,yylineno);}
+{ printf("---\nCan't use single quote from string literal\n %s on line :%d\n---\n",yytext,yylineno);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
 #line 149 "mini_java.lex"
-{printf("illegal_character \'%s\' on line :%d\n",yytext,yylineno);}
+{ printf("illegal_character \'%s\' on line :%d\n",yytext,yylineno);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP

@@ -14,4 +14,4 @@ echo "Flexing..."
 flex -o "${name}.yy.c" "${name}.lex"
 echo "Flex done"
 echo "Compiling..."
-gcc -o "${name}" "${name}.tab.c" "${name}.yy.c"
+gcc -o "${name}" "${name}.tab.c" "${name}.yy.c" semantic.c
