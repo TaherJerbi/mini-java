@@ -61,10 +61,7 @@ class JavaCompilerGUI(QMainWindow):
         print(code)
         print(output)
         # Set the output and stderr in the output textarea
-        if output.stderr:
-            self.output_textarea.setPlainText(output.stderr.decode())
-        else:
-            self.output_textarea.setPlainText("Compilation Successful!\n" + output.stdout.decode())
+        self.output_textarea.setPlainText(output.stderr.decode() + output.stdout.decode())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

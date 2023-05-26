@@ -3,6 +3,7 @@
     #include <stdlib.h>
     #include <string.h>
     #include "semantic.h"
+    #include "codegen.h"
 
     extern int yylineno;
 
@@ -10,12 +11,14 @@
     int yylex();
 
     int level = 0;
-		int class_id = -1;
-		int method_id = -1;
-		char* param_names[5];
-		char* param_types[5];
-		int param_count = 0;
-		int method_call_param_count = 0;
+    int class_id = -1;
+    int method_id = -1;
+    char* param_names[5];
+    char* param_types[5];
+    int param_count = 0;
+    int method_call_param_count = 0;
+
+    
 
 %}
 %define parse.error verbose
